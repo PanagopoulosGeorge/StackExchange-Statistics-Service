@@ -24,10 +24,18 @@ YYYY-MM-DD HH:MM:SS
 
 ### Key Components
 
-#### General
-- **`.gitignore`**: Specifies files and directories to be ignored by Git.
-- **`requirements.txt`**: Lists Python dependencies required for the project.
-- **`README.md`**: Documentation for the project.
+#### Structure
+```aiignore
+src/
+├── app/
+│   ├── components/
+│   │   ├── stackexchange.py    # StackExchange API integration
+notebooks/
+│   ├── stackexchange_notebook.ipynb # demo - tests
+├── .gitignore
+├── requirements.txt            # Python dependencies
+└── README.md                   # Project documentation
+```
 
 #### Stackexchange API Client
 - **`src/app/components/stackexchange.py`**: Contains the `StackExchangeClient` class for interacting with the StackExchange API. It supports fetching answers and comments with pagination and batching.
