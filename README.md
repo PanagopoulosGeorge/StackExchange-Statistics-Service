@@ -21,3 +21,24 @@ YYYY-MM-DD HH:MM:SS
  
   #### Non-Functional Requirements 
   1. Python version: >=3.6
+
+### Project structure:
+```
+src/
+├── app/
+│   ├── main.py                 # REST API entry point
+│   ├── components/
+│   │   ├── stackexchange.py    # StackExchange API integration
+│   │   └── statistics.py       # Statistics calculation logic
+│   ├── cache/
+│   │   └── cache.py            # Caching logic
+│   └── utils/
+│       └── helpers.py          # Utility functions
+├── tests/
+│   ├── test_api.py             # API endpoint tests
+│   ├── test_services.py        # Business logic tests
+│   └── test_cache.py           # Cache tests
+├── Dockerfile                  # Docker container definition
+├── requirements.txt            # Python dependencies
+└── README.md                   # Project documentation
+```
