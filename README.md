@@ -22,7 +22,6 @@ YYYY-MM-DD HH:MM:SS
   #### Non-Functional Requirements 
   1. Python version: >=3.6
 
-
 ### Key Components - Stackexchange API Client
 - **`src/app/components/stackexchange.py`**: Contains the `StackExchangeClient` class for interacting with the StackExchange API. It supports fetching answers and comments with pagination and batching.
 - **`notebooks/stackexchange_notebook.ipynb`**: A Jupyter Notebook demonstrating the usage of the `StackExchangeClient` and testing its functionality.
