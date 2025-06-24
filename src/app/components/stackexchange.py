@@ -52,7 +52,7 @@ class StackExchangeClient:
         }
         return _make_paginated_request(url, params)
 
-    def get_comments(self, answer_ids: list, batch_size: int = 80):
+    def get_comments(self, answer_ids: list, batch_size: int = 90):
         """
         Fetches comments for a specific answer.
         Params:
