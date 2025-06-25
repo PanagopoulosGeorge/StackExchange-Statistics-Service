@@ -46,3 +46,4 @@ notebooks/
 
 #### Statistics Calculation
 - **`src/app/components/statistics.py`**: Contains the `StatisticsCalculator` class for calculating statistics based on the retrieved StackOverflow data. It includes methods for calculating accepted answers, average scores, and comment counts for top answers.
+- **`StatisticsCalculator.compute() method:`** Takes a list of answer ids and returns a dictionary with the calculated statistics.

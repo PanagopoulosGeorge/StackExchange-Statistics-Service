@@ -35,7 +35,7 @@ class StackExchangeClient:
     SITE = "stackoverflow"
     PAGESIZE = 100
 
-    def get_answers(self, since, until):
+    def get_answers(self, since, until, mock = False):
         """
         Fetches answers from StackExchange within the specified date range.
         Params:
@@ -44,6 +44,12 @@ class StackExchangeClient:
         Returns:
             - List of answers with relevant details.
         """
+        if mock:
+            # Mock 1-page data for testing purposes
+            url = "https://gist.githubusercontent.com/PanagopoulosGeorge/4a5b2c1304971e502d64a5c1b13248bb/raw/6b748538ebeb137597655514a7dd47547d387f35/gistfile1.txt"
+            response = requests.get(url)
+            results = response.json()['items']
+            return results
         url = self.ANSWERS_URL
         params = {
             "fromdate": since,
