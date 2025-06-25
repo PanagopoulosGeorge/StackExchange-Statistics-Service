@@ -14,6 +14,9 @@ def _make_paginated_request(url: str, params: dict):
             response = requests.get(url, params=params)
             response.raise_for_status()
         except requests.RequestException as e:
+            if page >= 24:
+                print(f"Error: Too large date range requested (page: {page}), stopping further requests.")
+                print("Error: an API Key may be required for large requests.")
             print(f"Error fetching data from StackExchange API, url:{url}, page: {page} : {e}")
             return []
         data = response.json()
@@ -32,7 +35,7 @@ class StackExchangeClient:
     SITE = "stackoverflow"
     PAGESIZE = 100
 
-    def get_answers(self, since, until):
+    def get_answers(self, since, until, mock = False):
         """
         Fetches answers from StackExchange within the specified date range.
         Params:
@@ -41,6 +44,12 @@ class StackExchangeClient:
         Returns:
             - List of answers with relevant details.
         """
+        if mock:
+            # Mock 1-page data for testing purposes
+            url = "https://gist.githubusercontent.com/PanagopoulosGeorge/4a5b2c1304971e502d64a5c1b13248bb/raw/6b748538ebeb137597655514a7dd47547d387f35/gistfile1.txt"
+            response = requests.get(url)
+            results = response.json()['items']
+            return results
         url = self.ANSWERS_URL
         params = {
             "fromdate": since,
@@ -52,7 +61,7 @@ class StackExchangeClient:
         }
         return _make_paginated_request(url, params)
 
-    def get_comments(self, answer_ids: list, batch_size: int = 80):
+    def get_comments(self, answer_ids: list, batch_size: int = 90):
         """
         Fetches comments for a specific answer.
         Params:
