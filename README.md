@@ -17,7 +17,8 @@ YYYY-MM-DD HH:MM:SS
     * Average score of the **accepted** answers.
     * Average answer count per question.
     * Comment count for each of the top 10 answers with the highest scores.
- 6. Cache the results for faster reapeated retrievals.
+ 6. Cache the results for faster repeated retrievals.
+ 7. Statistical measures will be rounded to three decimals. 
  
   #### Non-Functional Requirements 
   1. Python version: >=3.6
@@ -30,6 +31,7 @@ src/
 ├── app/
 │   ├── components/
 │   │   ├── stackexchange.py    # StackExchange API integration
+        ├── statistics.py       # Statistics calculations
 notebooks/
 │   ├── stackexchange_notebook.ipynb # demo - tests
 ├── .gitignore
@@ -40,4 +42,7 @@ notebooks/
 #### Stackexchange API Client
 - **`src/app/components/stackexchange.py`**: Contains the `StackExchangeClient` class for interacting with the StackExchange API. It supports fetching answers and comments with pagination and batching.
 - **`notebooks/stackexchange_notebook.ipynb`**: A Jupyter Notebook demonstrating the usage of the `StackExchangeClient` and testing its functionality.
+- **`TODO:`**: Add routines to validate API responses. 
 
+#### Statistics Calculation
+- **`src/app/components/statistics.py`**: Contains the `StatisticsCalculator` class for calculating statistics based on the retrieved StackOverflow data. It includes methods for calculating accepted answers, average scores, and comment counts for top answers.

@@ -14,6 +14,9 @@ def _make_paginated_request(url: str, params: dict):
             response = requests.get(url, params=params)
             response.raise_for_status()
         except requests.RequestException as e:
+            if page >= 24:
+                print(f"Error: Too large date range requested (page: {page}), stopping further requests.")
+                print("Error: an API Key may be required for large requests.")
             print(f"Error fetching data from StackExchange API, url:{url}, page: {page} : {e}")
             return []
         data = response.json()
