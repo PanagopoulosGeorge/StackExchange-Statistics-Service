@@ -29,9 +29,11 @@ YYYY-MM-DD HH:MM:SS
 ```aiignore
 src/
 ├── app/
+        run.py                   # Flask app
 │   ├── components/
-│   │   ├── stackexchange.py    # StackExchange API integration
-        ├── statistics.py       # Statistics calculations
+│   │   ├── stackexchange.py     # StackExchange API integration
+        ├── rate_limits.py       # Comply with tha rate limitations of the Stackexchange API
+        ├── statistics.py        # Statistics calculations
 notebooks/
 │   ├── stackexchange_notebook.ipynb # demo - tests
 ├── .gitignore
@@ -47,3 +49,6 @@ notebooks/
 #### Statistics Calculation
 - **`src/app/components/statistics.py`**: Contains the `StatisticsCalculator` class for calculating statistics based on the retrieved StackOverflow data. It includes methods for calculating accepted answers, average scores, and comment counts for top answers.
 - **`StatisticsCalculator.compute() method:`** Takes a list of answer ids and returns a dictionary with the calculated statistics.
+
+#### Flask app
+- **`src/app/run.py`**: Contains a simple endpoint for getting the response from the calculations.
