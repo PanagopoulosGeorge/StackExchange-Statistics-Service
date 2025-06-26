@@ -29,7 +29,7 @@ YYYY-MM-DD HH:MM:SS
 ```aiignore
 src/
 ├── app/
-     run.py                      # Flask app
+        run.py                   # Flask app
 │   ├── components/
 │   │   ├── stackexchange.py     # StackExchange API integration
         ├── rate_limits.py       # Comply with tha rate limitations of the Stackexchange API
