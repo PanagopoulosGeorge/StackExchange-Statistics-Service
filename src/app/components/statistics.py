@@ -4,7 +4,7 @@ except ModuleNotFoundError:
     from stackexchange import StackExchangeClient # if ran as a script
 
 class StackStatsCalculator:
-    def __init__(self, answers):
+    def __init__(self, answers = None):
         self.answers = answers
         self.comments = []
         self.stackexchange_client = StackExchangeClient()
@@ -14,11 +14,14 @@ class StackStatsCalculator:
         answer_ids = [answer['answer_id'] for answer in self.top_10_answers]
         results = {str(id): 0 for id in answer_ids}
         self.comments = self.stackexchange_client.get_comments(answer_ids)
+        if 'error' in self.comments:
+            raise Exception("Error fetching comments: ", self.comments)
+            
         for comment in self.comments:
             answer_id = str(comment['post_id'])
             results[answer_id] = results.get(answer_id, 0) + 1
         return {
-            "top_10_answers_comments_count": results
+            "top_ten_answers_comment_count": results
         }
 
     def compute_aggregates(self) -> dict:
@@ -62,8 +65,8 @@ class StackStatsCalculator:
         )
         return {
             "total_accepted_answers": self.counter_of_accepted_answers,
-            "avg_score_accepted_answers": self.avg_score_accepted_answers,
-            "avg_answer_count_per_question": self.avg_answer_count_per_question,
+            "accepted_answers_average_score": self.avg_score_accepted_answers,
+            "average_answers_per_question": self.avg_answer_count_per_question,
         }
 
     def compute(self) -> dict:
