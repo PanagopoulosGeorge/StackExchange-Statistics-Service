@@ -4,6 +4,7 @@ from .components import statistics
 from flask_caching import Cache
 from decouple import config
 import time
+import sys
 app = Flask(__name__)
 stat_client = statistics.StackStatsCalculator()
 
@@ -46,4 +47,6 @@ def get_stack_stats():
     return jsonify(result), 200
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    arg1 = sys.argv[1]
+    debug = True if arg1 == '--debug' else False
+    app.run(debug=debug, port=5000, host='0.0.0.0')
