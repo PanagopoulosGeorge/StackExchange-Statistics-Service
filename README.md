@@ -22,7 +22,7 @@ YYYY-MM-DD HH:MM:SS
  
   #### Non-Functional and non-explicit Requirements 
   1. Python version: >=3.6
-  2. Deployment and CICD 
+### Installation
 
 ### Key Components
 
@@ -46,7 +46,6 @@ notebooks/
 #### Stackexchange API Client
 - **`src/app/components/stackexchange.py`**: Contains the `StackExchangeClient` class for interacting with the StackExchange API. It supports fetching answers and comments with pagination and batching.
 - **`notebooks/stackexchange_notebook.ipynb`**: A Jupyter Notebook demonstrating the usage of the `StackExchangeClient` and testing its functionality.
-- **`TODO:`**: Add routines to validate API responses. 
 
 #### Statistics Calculation
 - **`src/app/components/statistics.py`**: Contains the `StatisticsCalculator` class for calculating statistics based on the retrieved StackOverflow data. It includes methods for calculating accepted answers, average scores, and comment counts for top answers.
