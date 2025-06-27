@@ -7,6 +7,7 @@ class StackStatsCalculator:
     def __init__(self, answers = None):
         self.answers = answers
         self.comments = []
+        self.is_computed = False
         self.stackexchange_client = StackExchangeClient()
 
     def compute_top_answers_comment_count(self) -> dict:
@@ -50,8 +51,8 @@ class StackStatsCalculator:
             else:
                 self.counter_of_not_accepted_answers += 1
 
-        total_questions = len(self.distinct_question_ids)
-        total_answers = self.counter_of_accepted_answers + self.counter_of_not_accepted_answers
+        self.total_questions = len(self.distinct_question_ids)
+        self.total_answers = self.counter_of_accepted_answers + self.counter_of_not_accepted_answers
 
         self.avg_score_accepted_answers = (
             round(self.sum_accepted_scores / self.counter_of_accepted_answers, 3)
@@ -59,8 +60,8 @@ class StackStatsCalculator:
             else 0.0
         )
         self.avg_answer_count_per_question = (
-            round(total_answers / total_questions, 3)
-            if total_questions > 0
+            round(self.total_answers / self.total_questions, 3)
+            if self.total_questions > 0
             else 0.0
         )
         return {
@@ -74,6 +75,22 @@ class StackStatsCalculator:
         Combines the results of `compute_top_answers_comment_count` and `compute_aggregates`
         into one unified dictionary.
         """
-        top_answers_comments = self.compute_top_answers_comment_count()
+        self.top_answers_comments = self.compute_top_answers_comment_count()
         aggregates = self.compute_aggregates()
-        return {**aggregates, **top_answers_comments}
+        self.is_computed = True
+        
+        return {**aggregates, **self.top_answers_comments}
+
+    def __repr__(self):
+        "Returns distributed measures"
+        if not self.is_computed:
+            raise Exception("Not computed")
+        return {
+            "total_answers": self.total_answers,
+            "total_questions": self.total_questions,
+            "total_accepted_answers": self.counter_of_accepted_answers,
+            "total_not_accepted_answers": self.counter_of_not_accepted_answers,
+            "sum_accepted_scores": self.sum_accepted_scores,
+            **self.top_answers_comments
+
+        }

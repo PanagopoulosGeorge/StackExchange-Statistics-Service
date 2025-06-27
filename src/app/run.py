@@ -1,10 +1,19 @@
 from flask import Flask, request, jsonify
 from datetime import datetime
 from .components import statistics
+from flask_caching import Cache
+from decouple import config
+import time
 app = Flask(__name__)
 stat_client = statistics.StackStatsCalculator()
-import time
 
+cache = Cache()
+app.config['CACHE_TYPE'] = 'simple'                                         # Set the cache type
+app.config['CACHE_DEFAULT_TIMEOUT'] = config('CACHE_DEFAULT_TIMEOUT', 1800) # Set the default cache timeout in seconds
+app.config['CACHE_KEY_PREFIX'] = 'stackstats'                               # Set the cache key prefix
+cache.init_app(app)
+
+@cache.cached(timeout=1800) # Cache results for half an hour
 @app.route('/api/v1/stackstats', methods=['GET'])
 def get_stack_stats():
     
