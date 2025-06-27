@@ -20,8 +20,9 @@ YYYY-MM-DD HH:MM:SS
  6. Cache the results for faster repeated retrievals.
  7. Statistical measures will be rounded to three decimals. 
  
-  #### Non-Functional Requirements 
+  #### Non-Functional and non-explicit Requirements 
   1. Python version: >=3.6
+  2. Deployment and CICD 
 
 ### Key Components
 
@@ -38,7 +39,8 @@ notebooks/
 │   ├── stackexchange_notebook.ipynb # demo - tests
 ├── .gitignore
 ├── requirements.txt            # Python dependencies
-└── README.md                   # Project documentation
+├── README.md                   # Project documentation
+└── Dockerfile                  
 ```
 
 #### Stackexchange API Client
@@ -76,7 +78,7 @@ In production, this simple caching can be replaced by a redis server
 ```
 
 ```aiignore
-We can also add some data persistance in the form of a database:
+We can also add some data persistance in the form of a database (not implemented, it was not mentioned in the assesment):
 ```
 ![diagram](./img/simple_diagram.png)
 
