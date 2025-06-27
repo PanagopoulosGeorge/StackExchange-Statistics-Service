@@ -52,3 +52,50 @@ notebooks/
 
 #### Flask app
 - **`src/app/run.py`**: Contains a simple endpoint for getting the response from the calculations.
+
+#### Caching (Resources: [Supercharge Your Flask App with Flask-Caching: A Comprehensive Guide (Part 1)](https://medium.com/@jessicaovabor/supercharge-your-flask-app-with-flask-caching-a-comprehensive-guide-part-1-754d13570449))
+
+**`Description:`**
+```aiignore
+We first need to understand how volatile each metric is—how quickly and often it changes.
+
+Total number of answers:
+This value is generally stable within a given time range, unless a user deletes an answer. Such deletions are rare, but possible.
+Accepted status:
+The accepted status of an answer can change at any time, since the question author can mark a different answer as accepted later.
+Score:
+The score of an answer is also volatile, as it can increase or decrease at any time due to upvotes or downvotes.
+Average number of answers per question:
+This metric is relatively stable, but not completely non-volatile. If an answer is deleted from any question within the time range, the average will change. So, while it’s less volatile than the other metrics, it’s not entirely static.
+Comments:
+Comments are mostly volatile, since users can add or remove comments on answers at any time.
+
+A simple caching layer is added to the Flask app with a default timeout (ttl) of 1800 seconds.
+
+In production, this simple caching can be replaced by a redis server 
+```
+
+```aiignore
+We can also add some data persistance in the form of a database:
+```
+![diagram](./img/simple_diagram.png)
+
+```tsql
+CREATE TABLE "metrics" (
+  "id" integer PRIMARY KEY,
+  "created_at" timestamp NOT NULL,
+  "last_updated_at" timestamp NOT NULL,
+  "pot" timestamp NOT NULL,
+  "total_answers" integer NOT NULL,
+  "total_questions" integer NOT NULL,
+  "total_accepted_answers" integer NOT NULL,
+  "total_not_accepted_answers" integer NOT NULL,
+  "sum_accepted_scores" integer NOT NULL
+);
+
+CREATE TABLE "top_answers" (
+  "id" integer PRIMARY KEY,
+  "answer_id" integer NOT NULL,
+  "question_count" integer NOT NULL
+);
+```
