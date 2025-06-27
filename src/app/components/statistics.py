@@ -75,10 +75,11 @@ class StackStatsCalculator:
         Combines the results of `compute_top_answers_comment_count` and `compute_aggregates`
         into one unified dictionary.
         """
-        top_answers_comments = self.compute_top_answers_comment_count()
+        self.top_answers_comments = self.compute_top_answers_comment_count()
         aggregates = self.compute_aggregates()
         self.is_computed = True
-        return {**aggregates, **top_answers_comments}
+        
+        return {**aggregates, **self.top_answers_comments}
 
     def __repr__(self):
         "Returns distributed measures"
@@ -90,5 +91,6 @@ class StackStatsCalculator:
             "total_accepted_answers": self.counter_of_accepted_answers,
             "total_not_accepted_answers": self.counter_of_not_accepted_answers,
             "sum_accepted_scores": self.sum_accepted_scores,
+            **self.top_answers_comments
 
         }

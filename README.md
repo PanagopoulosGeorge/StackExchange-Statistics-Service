@@ -82,10 +82,11 @@ We can also add some data persistance in the form of a database:
 
 ```tsql
 CREATE TABLE "metrics" (
-  "id" integer PRIMARY KEY,
+  "id" INTEGER PRIMARY KEY AUTOINCREMENT,
   "created_at" timestamp NOT NULL,
   "last_updated_at" timestamp NOT NULL,
-  "pot" timestamp NOT NULL,
+  "pot_start" timestamp NOT NULL,
+  "pot_end" timestamp NOT NULL,
   "total_answers" integer NOT NULL,
   "total_questions" integer NOT NULL,
   "total_accepted_answers" integer NOT NULL,
@@ -94,7 +95,7 @@ CREATE TABLE "metrics" (
 );
 
 CREATE TABLE "top_answers" (
-  "id" integer PRIMARY KEY,
+  "metrics_id" integer PRIMARY KEY,
   "answer_id" integer NOT NULL,
   "question_count" integer NOT NULL
 );
