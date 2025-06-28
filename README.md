@@ -24,16 +24,14 @@ YYYY-MM-DD HH:MM:SS
   1. Python version: >=3.6
 ### Installation
  1. Unzip the file into a directory (Contains python-assignment) and open terminal within this folder.
- 2. if docker service is running on the host machine then:
-   - docker build -t stackstats .
-   - docker run -p 5000:5000 stackstats
-3. else:
+ 2. run in terminal:
    - python -m venv venv
    - source ./venv/bin/activate
    - pip install -r requirements.txt
    - in order to run the service run in the open terminal: 
      - cd src
      - python -m app.run --no_debug
+   or use the ./bootstrap.sh
 4. Perform a simple request: ```curl --request GET --url 'http://127.0.0.1:5000/api/v1/stackstats?since=2023-01-01%2010:00:00&until=2023-01-01%2012:00:00'```
 ### Key Components
 

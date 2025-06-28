@@ -1,6 +1,4 @@
 
-# Set the python version as a build-time argument
-# with Python 3.12 as the default
 ARG PYTHON_VERSION=3.9-slim-bullseye
 FROM python:${PYTHON_VERSION}
 
@@ -39,7 +37,7 @@ WORKDIR /usr/src/app
 COPY requirements.txt /tmp/requirements.txt
 COPY bootstrap.sh .
 # copy the project code into the container's working directory
-COPY ./src ./src
+COPY . .
 
 # Install the Python project requirements
 RUN pip install -r /tmp/requirements.txt
