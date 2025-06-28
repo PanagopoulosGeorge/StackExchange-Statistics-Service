@@ -25,12 +25,19 @@ YYYY-MM-DD HH:MM:SS
 ### Installation
  1. Unzip the file into a directory (Contains python-assignment) and open terminal within this folder.
  2. run in terminal:
-   - python -m venv venv
-   - source ./venv/bin/activate
-   - pip install -r requirements.txt
+   - ```python -m venv venv```
+   - ```source ./venv/bin/activate```
+   - ```pip install -r requirements.txt```
    - in order to run the service run in the open terminal: 
-     - cd src
-     - python -m app.run --no_debug
+      - ```./bootstrap.sh```
+ 3. if you have a windows machine, it is better to create the virtual environment using ```virtualenv``` package. In the open cmd run:
+   - ```pip install virtualenv``` (if not already installed)
+   - ```virtualenv venv```
+   - ```venv\Scripts\activate```
+   - ```pip install -r requirements.txt```
+   - in order to run the service run in the open terminal: 
+     - ```cd src```
+     - ```python -m run.app --no_debug```
    or use the ./bootstrap.sh
 4. Perform a simple request: ```curl --request GET --url 'http://127.0.0.1:5000/api/v1/stackstats?since=2023-01-01%2010:00:00&until=2023-01-01%2012:00:00'```
 ### Key Components
