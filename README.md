@@ -23,9 +23,8 @@ YYYY-MM-DD HH:MM:SS
   #### Non-Functional and non-explicit Requirements 
   1. Python version: >=3.6
 ### Installation
- 1. Unzip the file into a directory (Contains StackExchange-Statistics-Service) and open terminal within StackExchange-Statistics-Service folder.
+ 1. Unzip the file into a directory (Contains python-assignment) and open terminal within this folder.
  2. if docker service is running on the host machine then:
-   - cd <chosen_directory>/StackExchange-Statistics-Service
    - docker build -t stackstats .
    - docker run -p 5000:5000 stackstats
 3. else:
@@ -49,6 +48,7 @@ src/
         ├── statistics.py        # Statistics calculations
 notebooks/
 │   ├── stackexchange_notebook.ipynb # demo - tests
+    └── statistics.ipynb  
 ├── .gitignore
 ├── requirements.txt            # Python dependencies
 ├── README.md                   # Project documentation
