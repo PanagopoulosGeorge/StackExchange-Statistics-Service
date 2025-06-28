@@ -30,6 +30,21 @@ class StackExchangeClient:
 
     def get_answers(self, start_date_unix: int, end_date_unix: int,
                           batch: int = DEFAULT_BATCH, mock_api: bool = False) -> List[Dict]:
+        """
+        Retrieve answers from Stack Overflow within a specified date range.
+
+        Args:
+            start_date_unix (int): Start date as Unix timestamp for filtering answers
+            end_date_unix (int): End date as Unix timestamp for filtering answers
+            batch (int, optional): Batch size for API requests. Defaults to DEFAULT_BATCH.
+            mock_api (bool, optional): If True, uses mock data instead of live API. Defaults to False.
+
+        Returns:
+            List[Dict]: List of answer dictionaries containing Stack Overflow answer data
+
+        Raises:
+            StackExchangeError: If API request fails or returns invalid data        
+        """
         answers: List[Dict] = []
         if mock_api:
             url = "https://gist.githubusercontent.com/PanagopoulosGeorge/4a5b2c1304971e502d64a5c1b13248bb/raw/6b748538ebeb137597655514a7dd47547d387f35/gistfile1.txt"
@@ -53,6 +68,20 @@ class StackExchangeClient:
         return answers
 
     def get_comments(self, answer_ids: List[int], batch_size: int = 90) -> List[Dict]:
+        """
+        Retrieve comments for a list of answer IDs from Stack Exchange API.
+
+        Args:
+            answer_ids (List[int]): List of answer IDs to fetch comments for
+            batch_size (int, optional): Number of answer IDs to process in each batch. 
+                                       Defaults to 90 to stay within API limits.
+
+        Returns:
+            List[Dict]: List of comment dictionaries containing comment data from the API
+
+        Raises:
+            StackExchangeError: If API request fails or returns an error        
+        """
         comments: List[Dict] = []
         for i in self._iterate_batches(0, len(answer_ids), batch_size):
             ids = ";".join(map(str, answer_ids[i: i + batch_size]))
@@ -68,6 +97,22 @@ class StackExchangeClient:
             cur += delta
 
     def _fetch_paginated(self, url: str, base_params: dict, object_to_fetch = 'answer') -> List[Dict]:
+        """
+        Fetch all items from a paginated StackExchange API endpoint.
+                
+                Args:
+                    url (str): The API endpoint URL to fetch from
+                    base_params (dict): Base parameters to include in all requests
+                    object_to_fetch (str, optional): Type of object being fetched ('answer' or 'comment'). 
+                                                Defaults to 'answer'.
+                
+                Returns:
+                    List[Dict]: A list of all items retrieved from all pages of the API response
+                
+                Note:
+                     - This method automatically handles pagination by incrementing the page parameter
+                       until all available data has been retrieved.
+        """
         items, page = [], 1
         while True:
             params = {**base_params, "page": page}
@@ -82,6 +127,11 @@ class StackExchangeClient:
 
     @rate_limited(max_per_second=30)
     def __fetch(self, url, params=None, timeout=10, object_to_fetch='answer'):
+        """
+        Note:
+            - This method redirects to the appropriate fetch method based on the object_to_fetch parameter, 
+              in order to respect the per-endpoint api limitation.
+        """
         data = self.__fetch_answer(url, params=params, timeout=timeout) if object_to_fetch == 'answer' else self.__fetch_comment(url, params=params, timeout=timeout)
         return data
 

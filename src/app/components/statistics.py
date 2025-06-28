@@ -4,6 +4,27 @@ except ModuleNotFoundError:
     from stackexchange import StackExchangeClient # if ran as a script
 
 class StackStatsCalculator:
+    """
+    A calculator class for computing statistics on Stack Overflow answers and comments.
+    
+    This class provides functionality to analyze Stack Overflow data by computing
+    various statistics including top answers by comment count and aggregate metrics.
+    It uses the StackExchange API client to fetch additional data when needed.
+    
+    Attributes:
+        answers: List of answer objects to analyze
+        comments: List of comment objects associated with the answers
+        is_computed: Boolean flag indicating if statistics have been computed
+        stackexchange_client: Client for interacting with the StackExchange API
+    
+    Methods:
+        compute_top_answers_comment_count(): Computes top answers ranked by comment count
+        compute_aggregates(): Computes aggregate statistics across all answers
+        compute(): Main computation method that orchestrates all calculations    
+    
+    Instances of the class store the distributed measures that were calculated.
+    
+    """
     def __init__(self, answers = None):
         self.answers = answers
         self.comments = []
@@ -11,6 +32,16 @@ class StackStatsCalculator:
         self.stackexchange_client = StackExchangeClient()
 
     def compute_top_answers_comment_count(self) -> dict:
+        """
+        Computes the comment count for the top 10 highest-scored answers.
+                
+                This method identifies the top 10 answers by score, retrieves their comments
+                from the StackExchange API, and prepares a results dictionary to track
+                comment counts for each answer.
+                
+                Returns:
+                    dict: A dictionary mapping answer IDs to their comment counts        
+        """
         self.top_10_answers = sorted(self.answers, key = lambda x: x['score'], reverse=True)[:10]
         answer_ids = [answer['answer_id'] for answer in self.top_10_answers]
         results = {str(id): 0 for id in answer_ids}
