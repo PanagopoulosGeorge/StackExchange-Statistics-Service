@@ -94,7 +94,7 @@ In production, this simple caching can be replaced by a redis server
 ```
 
 ```aiignore
-We can also add some data persistance in the form of a database (not implemented, it was not mentioned in the assesment):
+We can also add some data persistance in the form of a database (not implemented):
 ```
 ![diagram](./img/simple_diagram.png)
 
